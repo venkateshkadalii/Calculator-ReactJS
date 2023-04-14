@@ -11,15 +11,11 @@ function App() {
     if (value.trim() === "AC") {
       setDisplay("");
     } else if (value.trim() === "DE") {
-      setDisplay((prevValue) => {
-        return prevValue.length > 0 ? prevValue.slice(0, -1) : "";
-      });
+      setDisplay(display.length > 0 ? display.slice(0, -1) : "");
     } else if (value.trim() === "=") {
       setDisplay(eval(display));
     } else {
-      setDisplay((prevValue) => {
-        return prevValue.concat(value);
-      });
+      setDisplay(display + "" + value);
     }
   };
 
