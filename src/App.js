@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Button from "./components/Button";
+import styles from "./App.module.css";
+import Card from "./components/Card";
+import Keyboard from "./components/Keyboard";
 
 function App() {
+  const [display, setDisplay] = useState("");
+
+  const enteredValueHandler = (value) => {
+    if (value.trim() === "AC") {
+      setDisplay("");
+    } else if (value.trim() === "DE") {
+      setDisplay((prevValue) => {
+        return prevValue.length > 0 ? prevValue.slice(0, -1) : "";
+      });
+    } else if (value.trim() === "=") {
+      setDisplay(eval(display));
+    } else {
+      setDisplay((prevValue) => {
+        return prevValue.concat(value);
+      });
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Card>
+        <div className={styles.display}>
+          <input
+            type="text"
+            className={styles.input}
+            value={display}
+            onChange=""
+          ></input>
+        </div>
+        <div>
+          <Keyboard onValue={enteredValueHandler} />
+        </div>
+      </Card>
+    </>
   );
 }
 
